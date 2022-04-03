@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<script src="https://kit.fontawesome.com/11e5bd316e.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<h1 style="color:white;">Products</h1>
+
+<style>
+	body {
+	background-color: #36454f;
+	}
+
+
+	/* Style the card itself */
+	.card {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, 300px);
+        text-align: center;
+        color: grey;
+        background-color: #36454f;
+        width: 83%;
+        height: 100%;
+        margin-right: 1px;
+        grid-template-rows: repeat (auto-fill, 1fr);
+
+	}
+
+	.card-img-top {
+	    height: 65%;
+	}
+
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+</style>
+
+<script>
+function myFunction(x) {
+  x.classList.toggle("fa-thumbs-down");
+}
+</script>
+
+<div class="grid-container">
+    {% for product in products %}
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="col-md-12 m-1 p-3 bg-dark text-white">
+                    <img src="{{ product.image_url }}" class="card-img-top"
+                         alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text">Rs.{{ product.amount }}</p>
+                        <a href="#" class="btn btn-secondary">
+                            <i onclick="myFunction(this)" class="fa fa-thumbs-up"></i></a>
+                        <a href="/products/info/{{ product.id }}" class="btn btn-secondary"> view
+                            product </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+{% endblock %}

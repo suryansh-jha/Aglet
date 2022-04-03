@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block content %}
+{%for products in products%}
+{% load crispy_forms_tags %}
+
+<style>
+    body {
+	background-color: #36454f;
+	color: white
+	}
+
+    .img-fluid {
+        max-width: 100%
+        max-height: auto
+    }
+
+
+
+
+
+</style>
+
+
+<div>
+    <h1> Checkout </h1>
+</div>
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-6">
+            <img class="img-fluid" src="{{ products.image_url }}" alt="">
+        </div>
+
+        <br>
+        <div class="container col-md-6" style="background-color: black; height: 350px; width: 50%
+                                                border-radius: 5px; padding: 30px;">
+            <div class="col-md-12">
+                <h2 style="text-align: center;"> Payment Details</h2>
+                <hr>
+
+                {% crispy form %}
+                <br>
+                {%if payment%}
+                    <form action="{% url 'payment-status' %}" method="POST">
+                        {% csrf_token %}
+                        <script
+                                src="https://checkout.razorpay.com/v1/checkout.js"
+                                data-key="rzp_test_IWzavywWt6XvLO"
+
+                                data-amount= 10000
+                                data-currency="{{ payment.currency }}"
+                                data-order_id="{{payment.id}}"
+                                data-buttontext="Pay with Razorpay"
+                                data-name="Aglet"
+                                data-description="Sole 2 Soul"
+                                data-image="{{ products.image_url }}"
+                                data-prefill.name="{{payment.name}}"
+                                data-prefill.email="you@example.com"
+                                data-theme.color="black"
+                        ></script>
+                        <input type="hidden" custom="Hidden Element" name="hidden">
+                    </form>
+                {% endif %}
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<br>
+<br>
+
+
+{% endfor %}
+{% endblock %}

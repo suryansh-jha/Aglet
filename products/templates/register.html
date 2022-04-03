@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+<style>
+   body {
+	background-color: white;
+	}
+
+</style>
+
+<div class="container py-5">
+    <h2>Sign up</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{form|crispy}}
+        <button type="submit">Sign up</button>
+    </form>
+    <p class="text-center">Already have an account? <a href="/products/login/">login</a>.</p>
+</div>
+
+{% endblock %}

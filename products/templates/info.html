@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+    body {
+	background-color: #36454f;
+	color: white
+	}
+
+    .img-fluid {
+        max-width: 100%
+        max-height: auto
+        border-style: solid
+        border-color: black
+    }
+
+
+
+
+
+</style>
+
+<script>
+    function myFunction(x) {
+      x.classList.toggle("fa-thumbs-down");
+    }
+
+</script>
+
+{%for products in products%}
+
+<div class="container">
+
+    <!-- Portfolio Item Heading -->
+    <h1 class="my-4"> {{ products.name}}
+    </h1>
+
+    <!-- Portfolio Item Row -->
+    <div class="row">
+
+        <div class="col-md-8">
+            <img class="img-fluid" style="border-style: solid;" src="{{ products.image_url }}" alt="">
+        </div>
+        <div class="container col-md-4" style="background-color: black; height: 450px; width: 100%
+                                                border-radius: 5px; padding: 30px;border-style: solid;
+                                                border-color: white;">
+            {% for info in info %}
+
+                <h3 class="my-3" style="color: white"> {{ products.name}} Description</h3>
+                <p style="font-size: 1.2rem"> {{ info.description }}.</p>
+                <h3 class="my-3">{{ products.name}} Details</h3>
+                <ul style="list-style-image:url()">
+                    <li style="list-style: none;font-size:2rem"><i class="far fa-money-bill-alt"></i> :
+                        Rs.{{products.amount}}
+                    </li>
+                    <li style="list-style: none;font-size:2rem"><i class="fas fa-boxes"></i> : {{products.stock}} units
+                    </li>
+                    <li style="list-style: none;font-size:2rem"><i class="fas fa-shipping-fast"></i> : 5-6 working days
+                    </li>
+                    <li style="list-style: none;font-size:2rem"><i class="fas fa-star"></i> : {{products.rating}}/5</li>
+
+                </ul>
+                <br>
+                <br>
+                <a href="#" class="btn btn-dark" style="font-size: 2rem">
+                    <i onclick="myFunction(this)" class="fa fa-thumbs-up"></i></a>
+                <a href="/products/checkout/{{ products.id }}/" class="btn btn-dark" style="font-size: 2rem"> Buy now!
+                </a>
+
+        </div>
+        {% endfor %}
+
+    </div>
+    <!-- /.row -->
+
+    <!-- Customer review -->
+
+    <div class="my-4">
+        <div style="margin: 5px padding:2px">
+            <h2>Customer Reviews <a class="btn btn-dark btn small" href="add-comment">
+                Add Comment </a></h2>
+
+            <hr>
+            {% if not products.comments.all %}
+
+            <p> no reviews yet...</p>
+
+            {% else %}
+
+            {% for comment in products.comments.all %}
+            <div class="card-deck">
+                <div class="my-4">
+                    <div class="card bg-dark">
+                        <div class="card-body">
+                            <h5 class="card-title" style="">{{ comment.commenter_name}}</h5>
+                            <hr>
+                            <p class="card-text">{{ comment.comment_body }}</p>
+                            <p><small> {{ comment.date_added }} </small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% endfor %}
+
+
+        {% endif %}
+
+    </div>
+
+
+</div>
+
+{% endfor %}
+{% endblock %}
